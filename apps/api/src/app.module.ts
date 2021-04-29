@@ -27,7 +27,7 @@ import { MailModule } from './mail/mail.module';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      ssl:(process.env.NODE_ENV === 'production') && {
+      ssl: (process.env.NODE_ENV === 'production') && {
         rejectUnauthorized: false
       },
       url: (process.env.NODE_ENV === 'production') && process.env.DATABASE_URL, 
