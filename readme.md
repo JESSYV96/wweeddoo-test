@@ -1,3 +1,7 @@
+## DEMO
+
+https://wweeddoo.herokuapp.com/
+
 ## Installation
 
 Clone this project into a folder :
@@ -28,7 +32,7 @@ yarn client:dev
 Production mode :
 
 ```
-heroku local web yarn build && yarn start:prod
+heroku local web
 ```
 or 
 
