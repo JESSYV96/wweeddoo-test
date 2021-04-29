@@ -6,7 +6,7 @@ export class AppController {
 
   @UseGuards(AuthGuard('local'))
   @Post('auth/login')
-  @Header('Access-Control-Allow-Origin', 'http://localhost:3000')
+  @Header('Access-Control-Allow-Origin', '*')
   @Header('Access-Control-Allow-Methods', 'GET, POST')
   @HttpCode(200)
   async login(@Request() req) {
