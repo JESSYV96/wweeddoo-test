@@ -2,6 +2,7 @@
   "name": "wweeddoo-client",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://127.0.0.1:4000",
   "dependencies": {
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
