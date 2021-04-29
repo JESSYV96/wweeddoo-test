@@ -1,0 +1,9 @@
+.project {
+  margin: 20px 0;
+  display: block;
+}
+.projectInfos {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
