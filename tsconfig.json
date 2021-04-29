@@ -7,5 +7,6 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "commonJs",
-  }
+  },
+  "exclude": ["node_modules", "dist", "test", "tmp", "**/*spec.ts"]
 }
