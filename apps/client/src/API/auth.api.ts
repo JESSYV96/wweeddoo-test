@@ -1,20 +1,24 @@
-import { LoginDTO } from "../dto/auth/auth.dto";
-import { UserDTO } from "../dto/user/user.dto";
-
+import axios from 'axios';
+import { LoginDTO } from '../dto/auth/auth.dto';
+import { headers } from './config/headers';
 
 export class AuthAPI {
-
-    public static async login({ email, password }: LoginDTO): Promise<UserDTO> {
-        const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/auth/login/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
+    public static async login({ email, password }: LoginDTO): Promise<any> {
+        const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login`,
+            {
+                email,
+                password
             },
-            referrerPolicy: 'unsafe-url',
-            body: JSON.stringify({email, password})
-        });
-        const data = await response.json()
+            {
+                headers
+            }
+        );
 
-        return data;
+        return response.data;
     }
+
+    public static async fetchCurrentUser(): Promise<any> {
+        return await axios.get(`${process.env.REACT_APP_SERVER_URL}/users/current`);
+    }
+
 }

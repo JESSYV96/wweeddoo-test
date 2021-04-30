@@ -6,10 +6,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container'
-import { login } from '../../redux/features/userSlice';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { Redirect } from 'react-router-dom';
-import { RootState } from '../../redux/store';
+import { currentUserTemp, login } from '../../redux/features/userSlice';
+import { useAppDispatch } from '../../redux/hooks';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,67 +33,71 @@ const useStyles = makeStyles((theme) => ({
 const LoginPage = () => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const { isAuth } = useAppSelector((state: RootState) => state.user)
+    const navigation = useHistory()
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
 
-    const auth = async (e: any) => {
-        e.preventDefault()
+    const auth = (e: any) => {
         if (email && password) {
             dispatch(login({ email, password }))
+            navigation.push('/dashboard')
         }
     }
 
+    const getCurrentUserTemp = (e: any) => {
+        e.preventDefault();
+        dispatch(currentUserTemp())
+        navigation.push('/dashboard')
+    }
+
     return (
-        !isAuth ?
-            <Container component="main" maxWidth="xs">
-                <div className={classes.paper}>
-                    <Typography component="h1" variant="h5">
-                        Sign in
+        <Container component="main" maxWidth="xs">
+            <div className={classes.paper}>
+                <Typography component="h1" variant="h5">
+                    Sign in
                     </Typography>
-                    <form className={classes.form} noValidate>
-                        <TextField
-                            onChange={e => setEmail(e.target.value)}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                            autoFocus />
-                        <TextField
-                            onChange={e => setPassword(e.target.value)}
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password" />
-                        <Button
-                            onClick={(e) => auth(e)}
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}>
-                            Sign In
+                <form className={classes.form}>
+                    <TextField
+                        onChange={e => setEmail(e.target.value)}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        autoFocus />
+                    <TextField
+                        onChange={e => setPassword(e.target.value)}
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        autoComplete="current-password" />
+                    <Button
+                        onClick={(e) => auth(e)}
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}>
+                        Sign In
                         </Button>
-                        <Grid container>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
+                    <Grid container>
+                        <Grid item>
+                            <Link href="#" variant="body2" onClick={(e: any) => getCurrentUserTemp(e)}>
+                                {"Passer l'étape de connexion"}
+                            </Link>
                         </Grid>
-                    </form>
-                </div>
-            </Container>
-            : <Redirect push to="/dashboard" />
+                    </Grid>
+                </form>
+            </div>
+        </Container>
     )
 }
 

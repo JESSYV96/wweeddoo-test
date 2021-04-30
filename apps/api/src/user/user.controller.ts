@@ -41,8 +41,8 @@ export class UserController {
 
   @Post('matches')
   @HttpCode(200)
-  retrieveListOfMatchingsUsers(@Body() listOfNeeds: SkillDTO[]) {
-    const needs: string[] = listOfNeeds.map(need => need.content);
+  retrieveListOfMatchingsUsers(@Body() listOfNeeds: any) {
+    const needs: string[] = listOfNeeds.data.map(need => need.content);
     return this.userService.generateMatchingUserList(needs)
   }
 

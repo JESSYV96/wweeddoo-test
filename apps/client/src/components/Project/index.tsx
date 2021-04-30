@@ -25,7 +25,7 @@ const Project = ({ projectName, projectDescription, projectSkills: ps, projectNe
     useEffect(() => {
         (async function getAllSkills() {
             const allSkills = await SkillAPI.getAllSkills();
-            setSkills(allSkills)
+            setSkills(allSkills.data)
         })();
     }, [])
 

@@ -6,12 +6,13 @@ import { UserDTO } from '../../dto/user/user.dto';
 import { AppDispatch } from '../store';
 
 interface UserSlice {
-    currentUser: UserDTO,
+    user: UserDTO,
     isAuth: boolean
+    loading: boolean
 }
 
 const initialState: UserSlice = {
-    currentUser: {
+    user: {
         firstname: '',
         lastname: '',
         email: '',
@@ -19,28 +20,30 @@ const initialState: UserSlice = {
         skills: [],
         needs: []
     },
-    isAuth: false
+    isAuth: false,
+    loading: true
 }
 
 export const userSlice = createSlice({
-    name: 'users/current',
+    name: 'users',
     initialState,
     reducers: {
         currentUser: (state, action: PayloadAction<UserDTO>) => {
-            state.currentUser.firstname = action.payload.firstname
-            state.currentUser.lastname = action.payload.lastname
-            state.currentUser.email = action.payload.email
-            state.currentUser.projects = [...action.payload.projects]
-            state.currentUser.skills = [...action.payload.skills]
-            state.currentUser.needs = [...action.payload.needs]
-
+            state.user.firstname = action.payload.firstname
+            state.user.lastname = action.payload.lastname
+            state.user.email = action.payload.email
+            state.user.projects = [...action.payload.projects]
+            state.user.skills = [...action.payload.skills]
+            state.user.needs = [...action.payload.needs]
+            state.loading = false
             state.isAuth = true
         },
         editSkills: (state, action: PayloadAction<SkillDTO[]>) => {
-            state.currentUser.skills = [...action.payload]
+            state.user.skills = [...action.payload]
         },
+
         editNeeds: (state, action: PayloadAction<SkillDTO[]>) => {
-            state.currentUser.needs = [...action.payload]
+            state.user.needs = [...action.payload]
         }
     },
 })
@@ -54,7 +57,7 @@ export const login = ({ email, password }: LoginDTO) => async (dispatch: AppDisp
     try {
         const user = await AuthAPI.login({ email, password });
         if (user) {
-            dispatch(currentUser(user))
+            return dispatch(currentUser(user))
         }
     }
     catch (e) {
@@ -62,6 +65,58 @@ export const login = ({ email, password }: LoginDTO) => async (dispatch: AppDisp
     }
 }
 
+export const currentUserTemp = () => async (dispatch: AppDispatch) => {
+    const userTemp: UserDTO = {
+        firstname: "John",
+        lastname: "Smith",
+        email: "john.smith@email.fr",
+        projects: [
+            {
+                id: 1025,
+                name: "Absolute project",
+                description: "test project"
+            }
+        ],
+        needs: [
+            {
+                id: 65,
+                content: "Relations sociales"
+            },
+            {
+                id: 82,
+                content: "Photo"
+            },
+            {
+                id: 10,
+                content: "Développement durable"
+            },
+            {
+                id: 13,
+                content: "Recherche de partenaires et sponsors"
+            },
+            {
+                id: 76,
+                content: "Marketing digital"
+            }
+        ],
+        skills: [
+            {
+                id: 15,
+                content: "Gestion d'un projet de voyage"
+            },
+            {
+                id: 82,
+                content: "Organiser des événements"
+            },
+            {
+                id: 16,
+                content: "Autres langues"
+            }
+        ]
+
+    }
+    return dispatch(currentUser(userTemp))
+}
 export const updateProjectSkills = (skills: SkillDTO[]) => async (dispatch: AppDispatch) => {
     dispatch(editSkills(skills))
 }
