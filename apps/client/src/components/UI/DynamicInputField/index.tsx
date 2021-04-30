@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import { ISkills } from '../../../dto/user.dto';
+import { SkillDTO } from '../../../dto/skills/skill.dto';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 interface Props {
     key?: string | number
     children: string
-    allSkills?: ISkills[]
+    allSkills?: SkillDTO[]
     addSkill?: any
     removeSkill?: any
     updateSkill?: any

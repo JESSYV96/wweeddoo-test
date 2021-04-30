@@ -1,5 +1,6 @@
-import { LoginDTO } from "../dto/auth.dto";
-import { UserDTO } from "../dto/user.dto";
+import { LoginDTO } from "../dto/auth/auth.dto";
+import { UserDTO } from "../dto/user/user.dto";
+
 
 export class AuthAPI {
 

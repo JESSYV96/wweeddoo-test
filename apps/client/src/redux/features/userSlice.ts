@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthAPI } from '../../API/auth.api';
-import { LoginDTO } from '../../dto/auth.dto';
-import { INeeds, ISkills, UserDTO } from '../../dto/user.dto';
+import { LoginDTO } from '../../dto/auth/auth.dto';
+import { SkillDTO } from '../../dto/skills/skill.dto';
+import { UserDTO } from '../../dto/user/user.dto';
 import { AppDispatch } from '../store';
 
 interface UserSlice {
@@ -35,10 +36,10 @@ export const userSlice = createSlice({
 
             state.isAuth = true
         },
-        editSkills: (state, action: PayloadAction<ISkills[]>) => {
+        editSkills: (state, action: PayloadAction<SkillDTO[]>) => {
             state.currentUser.skills = [...action.payload]
         },
-        editNeeds: (state, action: PayloadAction<INeeds[]>) => {
+        editNeeds: (state, action: PayloadAction<SkillDTO[]>) => {
             state.currentUser.needs = [...action.payload]
         }
     },
@@ -61,10 +62,10 @@ export const login = ({ email, password }: LoginDTO) => async (dispatch: AppDisp
     }
 }
 
-export const updateProjectSkills = (skills: ISkills[]) => async (dispatch: AppDispatch) => {
+export const updateProjectSkills = (skills: SkillDTO[]) => async (dispatch: AppDispatch) => {
     dispatch(editSkills(skills))
 }
 
-export const updateProjectNeeds = (skills: INeeds[]) => async (dispatch: AppDispatch) => {
+export const updateProjectNeeds = (skills: SkillDTO[]) => async (dispatch: AppDispatch) => {
     dispatch(editNeeds(skills))
 }

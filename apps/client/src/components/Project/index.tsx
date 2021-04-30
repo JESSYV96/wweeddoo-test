@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { SkillAPI } from '../../API/skill.api'
-import { INeeds, ISkills } from '../../dto/user.dto'
 import InputSkill from '../UI/DynamicInputField'
 import "./styles.css"
 import { useAppDispatch } from '../../redux/hooks';
@@ -8,17 +7,18 @@ import { updateProjectSkills, updateProjectNeeds } from '../../redux/features/us
 
 
 import Button from '@material-ui/core/Button';
+import { SkillDTO } from '../../dto/skills/skill.dto';
 
 interface Props {
     projectName: string
     projectDescription?: string
-    projectSkills: ISkills[]
-    projectNeeds: INeeds[]
+    projectSkills: SkillDTO[]
+    projectNeeds: SkillDTO[]
 }
 
 const Project = ({ projectName, projectDescription, projectSkills: ps, projectNeeds: pn }: Props) => {
     const dispatch = useAppDispatch()
-    const [skills, setSkills] = useState<ISkills[]>()
+    const [skills, setSkills] = useState<SkillDTO[]>()
     const [projectSkills, setProjectSkills] = useState(ps)
     const [projectNeeds, setProjectNeeds] = useState(pn)
 
@@ -35,7 +35,7 @@ const Project = ({ projectName, projectDescription, projectSkills: ps, projectNe
      * @param skillsOrNeeds If true it means that skills, if false it means that needs
      * @returns 
      */
-    const submitHandler = (skills: ISkills[] | INeeds[], skillsOrNeeds: boolean) => {
+    const submitHandler = (skills: SkillDTO[], skillsOrNeeds: boolean) => {
         if (skills === []) return;
         if(skillsOrNeeds) {
             dispatch(updateProjectSkills(skills))
@@ -47,16 +47,16 @@ const Project = ({ projectName, projectDescription, projectSkills: ps, projectNe
     const addProjectSkillsFieldHandler = () => {
         const newSkills = { id: 0, content: '' }
         if (projectSkills !== undefined) {
-            const updateProjectSkills: ISkills[] = [...projectSkills, newSkills];
+            const updateProjectSkills: SkillDTO[] = [...projectSkills, newSkills];
             return setProjectSkills(updateProjectSkills)
         }
-        const updateProjectSkills: ISkills[] = [newSkills];
+        const updateProjectSkills: SkillDTO[] = [newSkills];
         return setProjectSkills(updateProjectSkills)
     }
 
     const removeProjectSkillsFieldHandler = (indexToRemove: number) => {
         if (projectSkills !== undefined) {
-            const updateProjectSkills: ISkills[] = [...projectSkills];
+            const updateProjectSkills: SkillDTO[] = [...projectSkills];
             //updateProjectSkills.filter((_, index: number) => indexToRemove !== index)
             updateProjectSkills.splice(indexToRemove, 1)
             setProjectSkills(updateProjectSkills)
@@ -65,7 +65,7 @@ const Project = ({ projectName, projectDescription, projectSkills: ps, projectNe
 
     const updateProjectSkillsHandler = (index: number, skillUpdate: string) => {
         if (projectSkills !== undefined) {
-            const updateProjectSkills: ISkills[] = [...projectSkills];
+            const updateProjectSkills: SkillDTO[] = [...projectSkills];
             updateProjectSkills[index].content = skillUpdate
             setProjectSkills(updateProjectSkills)
         }
@@ -75,16 +75,16 @@ const Project = ({ projectName, projectDescription, projectSkills: ps, projectNe
         const newSkills = { id: 0, content: '' }
         
         if (projectNeeds !== undefined) {
-            const updateProjectNeeds: INeeds[] = [...projectNeeds, newSkills];
+            const updateProjectNeeds: SkillDTO[] = [...projectNeeds, newSkills];
             return setProjectNeeds(updateProjectNeeds)
         }
-        const updateProjectNeeds: INeeds[] = [newSkills];
+        const updateProjectNeeds: SkillDTO[] = [newSkills];
         return setProjectNeeds(updateProjectNeeds)
     }
 
     const removeProjectNeedsFieldHandler = (indexToRemove: number) => {
         if (projectNeeds !== undefined) {
-            const updateProjectNeeds: INeeds[] = [...projectNeeds];
+            const updateProjectNeeds: SkillDTO[] = [...projectNeeds];
             updateProjectNeeds.splice(indexToRemove, 1)
             setProjectNeeds(updateProjectNeeds)
         }
@@ -92,7 +92,7 @@ const Project = ({ projectName, projectDescription, projectSkills: ps, projectNe
 
     const updateProjectNeedsHandler = (index: number, needUpdate: string) => {
         if (projectNeeds !== undefined) {
-            const updateProjectNeeds: INeeds[] = [...projectNeeds];
+            const updateProjectNeeds: SkillDTO[] = [...projectNeeds];
             updateProjectNeeds[index].content = needUpdate
             setProjectNeeds(updateProjectNeeds)
         }

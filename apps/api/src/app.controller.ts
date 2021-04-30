@@ -12,6 +12,5 @@ export class AppController {
   @HttpCode(200)
   async login(@Request() req) {
     return req.user;
-  }
-
+  } 
 }

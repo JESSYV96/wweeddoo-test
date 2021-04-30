@@ -1,4 +1,6 @@
-import { INeeds, UserDTO } from "../dto/user.dto";
+import { SkillDTO } from "../dto/skills/skill.dto";
+import { UserDTO } from "../dto/user/user.dto";
+
 
 
 export class UserAPI {
@@ -19,7 +21,7 @@ export class UserAPI {
     /**
      * Retrieve a list of users who matches with needs projects
      */
-    public static async getListUsersMatches(listNeeds: INeeds[]): Promise<any> {
+    public static async getListUsersMatches(listNeeds: SkillDTO[]): Promise<any> {
         const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/users/matches`, {
             method: 'POST',
             headers: {

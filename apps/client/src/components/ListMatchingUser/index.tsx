@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import './styles.css';
 import Button from '@material-ui/core/Button';
-import { INeeds } from '../../dto/user.dto';
 import { UserAPI } from '../../API/user.api';
-import { userMatchDTO } from '../../dto/userMatch.dto';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -17,9 +15,11 @@ import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import { SkillDTO } from '../../dto/skills/skill.dto';
+import { userMatchDTO } from '../../dto/user/userMatch.dto';
 
 interface Props {
-    projectNeeds?: INeeds[]
+    projectNeeds?: SkillDTO[]
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -58,7 +58,7 @@ const ListMatchingUser = ({ projectNeeds }: Props) => {
         setOpenModal(false);
     }
 
-    const callHelpHandler = async (needs: INeeds[]): Promise<void> => {
+    const callHelpHandler = async (needs: SkillDTO[]): Promise<void> => {
         if (needs === []) return console.log("Vous n'avez pas de besoin en compétence");
 
         const users: userMatchDTO[] = await UserAPI.getListUsersMatches(needs)

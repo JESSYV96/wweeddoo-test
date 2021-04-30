@@ -1,7 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post } from '@nestjs/common';
-import { SkillDTO } from '../skill/dto/skill.dto';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { SkillDTO } from '../dto/skills/skill.dto';
+import { CreateUserDto } from '../dto/user/create-user.dto';
+import { UpdateUserDto } from '../dto/user/update-user.dto';
+import { UserDTO } from '../dto/user/user.dto';
 import { UserService } from './user.service';
 
 @Controller('users')
@@ -12,6 +13,21 @@ export class UserController {
   findAll() {
     return this.userService.findAll();
   }
+
+  @Get('current')
+  async findUsercurrentUserTemp() {
+    const data = await this.userService.findOne(3)
+    const user: UserDTO = {
+      firstname: data.firstname,
+      lastname: data.lastname,
+      email: data.email,
+      projects: data.projects,
+      skills: data.skills,
+      needs: data.needs,
+    }
+    return user
+  }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -30,15 +46,8 @@ export class UserController {
     return this.userService.generateMatchingUserList(needs)
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
-
-
 }

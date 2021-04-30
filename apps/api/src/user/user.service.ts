@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { userMatchDTO } from './dto/userMatch.dto';
 import { Repository } from 'typeorm';
 import * as usersJson from '../../data/users_data.json'
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from '../dto/user/create-user.dto';
+import { userMatchDTO } from '../dto/user/userMatch.dto';
 import { User } from './user.entity';
+
 
 @Injectable()
 export class UserService {
-
     constructor(@InjectRepository(User) private usersRepository: Repository<User>) { }
 
     async generateMatchingUserList(needs: string[]): Promise<userMatchDTO[]> {
@@ -88,10 +87,6 @@ export class UserService {
 
     findOne(id: number) {
         return this.usersRepository.findOne(id);
-    }
-
-    update(id: number, updateUserDto: UpdateUserDto) {
-        return `This action updates a #${id} user`;
     }
 
     remove(id: number) {

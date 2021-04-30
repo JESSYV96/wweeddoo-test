@@ -1,5 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
-import { SkillDTO } from './dto/skill.dto';
+import { SkillDTO } from '../dto/skills/skill.dto';
 import { SkillService } from './skill.service';
 
 @Controller('skills')
