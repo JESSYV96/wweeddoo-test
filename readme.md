@@ -16,8 +16,10 @@ Then, for each apps, install dependencies with :
 yarn install:project
 ```
 
+Before, run the app, you must set the variables environments, use the file env.dist, to create your own .env
+
 ## Run the app 
-Developent mode, run the following commands on different terminal :
+Developent mode, run the following commands on different terminal (at root project) :
 
 1) For API
 ```
@@ -29,7 +31,7 @@ yarn start:dev
 yarn client:dev
 ```
 
-Production mode :
+Production mode (at root project) :
 
 ```
 heroku local web
